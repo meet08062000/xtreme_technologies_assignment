@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import environ
 import os
+import dj_database_url
 
 env = environ.Env(
     # set casting, default value
@@ -59,7 +60,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mail_weather.apps.MailWeatherConfig'
+    'mail_weather.apps.MailWeatherConfig',
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -97,12 +99,9 @@ WSGI_APPLICATION = 'xtreme_assignment.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {}
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -146,5 +145,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# location where django collect all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# location where you will store your static files
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'project_name/static')]
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
