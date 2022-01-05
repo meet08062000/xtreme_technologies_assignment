@@ -1,1 +1,3 @@
-This is the README file of the project.
+This project is a part of the selection procedure for an internship at Xtreme Technologies, if we go to the URL: https://weather-mail-xtreme.herokuapp.com/admin and enter the admin username and password and then create a new user, the user will receive an email with subject Hi {username}, interested in our services.
+The email body will consist of the temperature of the city entered by the user at the time of sending the email and an emoji depicting the temperature.
+The website is hosted on heroku and the database used is PostgreSQL.
